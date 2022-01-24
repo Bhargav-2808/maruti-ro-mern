@@ -1,0 +1,8 @@
+.form{
+    display: grid;
+    justify-content: center;
+}
+
+.login_logo{
+    width: 40px;
+}
