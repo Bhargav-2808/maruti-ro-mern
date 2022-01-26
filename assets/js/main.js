@@ -222,8 +222,12 @@
 })(jQuery);
 
 
-document.getElementById(login-button).click(function(event){
-  event.preventDefault();
 
 
-});
+
+
+// firebase.auth().onAuthStateChanged((user)=>{
+//   if(!user){
+//       location.replace("login.html")
+//   }
+// })

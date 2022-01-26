@@ -17,32 +17,28 @@
     <div class="container">
       <div class="row">
         <div class="col mt-5">
-          <form class="form">
-            <div class="card mt-5" style="width: 18rem">
-              <div class="card-body" style="margin: 15px;">
-                <div class="row">
-                  <div class="col" style="display:flex; ">
-                    <h2>Login with Google</h2>
-                    <img
+          <div class="card mt-5" style="width: 18rem">
+            <div class="card-body" style="margin: 15px">
+              <div class="row">
+                <div class="col" style="display: flex">
+                  <h2>Login with Google</h2>
+                  <img
                     src="./assets/img/google-brands.svg"
                     class="login_logo"
                     alt="google logo"
-                  />        
+                  />
                 </div>
-                
-                </div>
-
-                <button type="button" class="btn btn-primary mt-5">
-                  Log in / Sign in
-                </button>
               </div>
+
+              <button type="button" class="btn btn-primary mt-5" id="login">
+                Log in / Sign in
+              </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="assets/js/main.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
       integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
@@ -53,5 +49,66 @@
       integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
       crossorigin="anonymous"
     ></script>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
+
+      import {
+        GoogleAuthProvider,
+        getAuth,
+        signInWithPopup,
+        onAuthStateChanged 
+      } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-auth.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyDH0nJK6ZcoOVPtXtOw6wvnMf-v_lUYQCc",
+        authDomain: "e-commerceweb-f6525.firebaseapp.com",
+        projectId: "e-commerceweb-f6525",
+        storageBucket: "e-commerceweb-f6525.appspot.com",
+        messagingSenderId: "245292473828",
+        appId: "1:245292473828:web:1e2ba1ff11cc1c66fc3bf1",
+        measurementId: "G-V2YVK73VG3",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider(app);
+
+      login.addEventListener("click", (event) => {
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // ...
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+          });
+      });
+
+
+      onAuthStateChanged(auth, (user)=>{
+        if(user){
+          location.replace("index.html")
+        }
+      })
+    </script>
+    <script src="./assets/js/login.js"></script>
   </body>
 </html>
